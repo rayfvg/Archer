@@ -1,0 +1,210 @@
+fileFormatVersion: 2
+guid: 3c5bdac021e185a4e9bd49f2a89be0b7
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable: []
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    rigImportErrors: "Invalid Avatar Rig Configuration. Missing or invalid transform:\n\tRequired
+      human bone 'LeftLowerLeg' not found\n"
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton:
+    - name: White(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: White
+      parentName: White(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0.000000030908623, z: -0.000000030908616, w: 0.7071067}
+      scale: {x: 100, y: 100, z: 100}
+    - name: MBN_Root
+      parentName: White
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: BN_Body
+      parentName: MBN_Root
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 1, y: 1, z: 1}
+    - name: BN_Head
+      parentName: BN_Body
+      position: {x: -0, y: 0.026398238, z: -0.00055210735}
+      rotation: {x: -0.3255682, y: -0.0000001127146, z: 0.000000038810754, w: 0.94551855}
+      scale: {x: 1, y: 1, z: 1}
+    - name: BN_Mouth
+      parentName: BN_Head
+      position: {x: -0.000000002470379, y: 0.006003063, z: -0.010361521}
+      rotation: {x: 0.8987941, y: 0.000000489483, z: 0.0000007892997, w: 0.43837106}
+      scale: {x: 1, y: 1, z: 1.0000001}
+    - name: BN_Jaw
+      parentName: BN_Mouth
+      position: {x: -0.000000010241379, y: 0.0000000012608623, z: 0.005134112}
+      rotation: {x: -2.558362e-19, y: 0.00000035762787, z: -1.6940659e-21, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: BN_Eye_R
+      parentName: BN_Head
+      position: {x: 0.004999998, y: 0.012975044, z: -0.0076431534}
+      rotation: {x: 0.8987941, y: 0.00000069444206, z: 0.0000012198645, w: 0.43837106}
+      scale: {x: 1, y: 1, z: 1.0000001}
+    - name: BN_EyeTop_R
+      parentName: BN_Eye_R
+      position: {x: 0.0000000127685675, y: 5.9535954e-10, z: -0.0044999993}
+      rotation: {x: 6.5453433e-16, y: 0.00000023841847, z: -0.000000004531217, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: BN_Eye_L
+      parentName: BN_Head
+      position: {x: -0.0050000018, y: 0.012975042, z: -0.0076431534}
+      rotation: {x: 0.8987941, y: 0.0000007199138, z: 0.0000013400736, w: 0.43837106}
+      scale: {x: 1, y: 1, z: 1.0000001}
+    - name: BN_EyeTop_L
+      parentName: BN_Eye_L
+      position: {x: 0.000000013728488, y: 9.839953e-10, z: -0.0044999993}
+      rotation: {x: 9.602777e-15, y: 0.00000023841858, z: -0.000000034333546, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: BN_Eyebrow_R
+      parentName: BN_Head
+      position: {x: 0.004999999, y: 0.018049184, z: -0.0036787998}
+      rotation: {x: 0.8987941, y: 0.0000007989579, z: 0.0000014341537, w: 0.43837106}
+      scale: {x: 1, y: 1, z: 1.0000001}
+    - name: BN_Eyebrow_L
+      parentName: BN_Head
+      position: {x: -0.0050000004, y: 0.018049184, z: -0.0036787975}
+      rotation: {x: 0.8987941, y: 0.00000082442966, z: 0.0000015543627, w: 0.43837106}
+      scale: {x: 1, y: 1, z: 1.0000001}
+    - name: BN_Ear_L
+      parentName: BN_Head
+      position: {x: -0.0015262861, y: 0.00737221, z: 0.002018872}
+      rotation: {x: 0.31134245, y: -0.09518669, z: 0.2764428, w: 0.90420395}
+      scale: {x: 1, y: 1.0000001, z: 1}
+    - name: BN_Ear_R
+      parentName: BN_Head
+      position: {x: 0.0015262865, y: 0.00737221, z: 0.0020188713}
+      rotation: {x: 0.31134236, y: 0.09518691, z: -0.27644286, w: 0.90420395}
+      scale: {x: 1, y: 1, z: 1}
+    - name: BN_CheekTuft_L
+      parentName: BN_Head
+      position: {x: -0.01, y: 0.002683103, z: -0.0016446572}
+      rotation: {x: 0.19819355, y: -0.25829065, z: 0.75013036, w: 0.5755952}
+      scale: {x: 1.0000002, y: 1.0000001, z: 1}
+    - name: BN_CheekTuft_R
+      parentName: BN_Head
+      position: {x: 0.009999999, y: 0.002683103, z: -0.0016446617}
+      rotation: {x: 0.670566, y: 0.5896464, z: -0.3902785, w: 0.22436821}
+      scale: {x: 1.0000002, y: 1.0000001, z: 1}
+    - name: Body
+      parentName: White(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0.000000030908623, z: -0.000000030908616, w: 0.7071067}
+      scale: {x: 100, y: 100, z: 100}
+    - name: Face
+      parentName: White(Clone)
+      position: {x: -0, y: 2.3600001, z: -1.2500002}
+      rotation: {x: 1, y: -1.5888268e-15, z: -0.00000004371139, w: -0.00000003774895}
+      scale: {x: 100, y: 40, z: 100}
+    - name: Outline
+      parentName: White(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0.000000030908623, z: -0.000000030908616, w: 0.7071067}
+      scale: {x: 100, y: 100, z: 100}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

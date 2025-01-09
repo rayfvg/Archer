@@ -48,11 +48,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DotForTarget: {fileID: 0}
-  _forse: 1364.5
+  _forse: 50
+  _forseBounse: 40
   _rigidbody: {fileID: 1337713765861194170}
-  _maxEmbedAngle: 40
   arrowEmbed: 1.5
-  _lifeTime: 0
+  _lifeTime: 3
 --- !u!54 &1337713765861194170
 Rigidbody:
   m_ObjectHideFlags: 0

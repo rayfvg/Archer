@@ -6,80 +6,118 @@ public class Arrow : MonoBehaviour
     public Transform DotForTarget;
 
     [SerializeField] private float _forse;
+    [SerializeField] private float _forseBounse;
     [SerializeField] private Rigidbody _rigidbody;
 
     [SerializeField] private float arrowEmbed = 0.01f;
 
-    private bool _embedded = false;
+    [SerializeField] private float _lifeTime;
+
+    private bool hasHitEnemy = false;
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (_embedded)
-            return;
-
-        Vector3 collisionNormal = collision.contacts.Length > 0
-            ? collision.contacts[0].normal
-            : Vector3.up; // Подстраховка
-
-        Vector3 arrowDirection = _rigidbody.velocity.normalized;
-
-        float angle = Vector3.Angle(arrowDirection, -collisionNormal);
-
-        Debug.Log($"Collision Normal: {collisionNormal}, Arrow Direction: {arrowDirection}, Angle: {angle}");
-
-        // Проверяем, можно ли вонзиться
-        if (angle < 89 || angle > 91)
+        if (collision.gameObject.CompareTag("Wall"))
         {
-            EmbedArrow(collision);
-            Debug.Log("Вонзил");
+            ShootInWall(collision);
         }
-        else if (collision.gameObject.CompareTag("Wall"))
+
+        if(collision.collider.TryGetComponent(out Enemy enemy))
         {
-            ReflectArrow(collisionNormal);
+            enemy.TakeDamage();
+
+            hasHitEnemy = true; // Помечаем, что стрела попала во врага
+            CancelInvoke("DestroyArrow");
+
+            EmbedArrow(collision);
+            GetComponent<Collider>().enabled = false;
         }
     }
 
     public void Shoot()
     {
+        Invoke("DestroyArrow", 3f);
+
         _rigidbody.isKinematic = false;
         transform.parent = null;
-        _rigidbody.AddForce(transform.forward * _forse * Time.deltaTime, ForceMode.Impulse);
+
+        //transform.position = new Vector3(transform.position.x, transform.position.z, 0);
+        _rigidbody.AddForce(transform.forward * _forse, ForceMode.Impulse);
     }
 
-    private void EmbedArrow(Collision collision)
+    public void EmbedArrow(Collision collision)
     {
-        _embedded = true;
+        Debug.Log("проткнул");
 
-        // Отключаем физику стрелы
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.isKinematic = true;
 
-        // Получаем информацию о столкновении
         ContactPoint contact = collision.contacts[0];
 
-        // Устанавливаем стрелу в точке столкновения с небольшим смещением
         transform.position = contact.point + contact.normal * arrowEmbed;
 
-        // Поворачиваем стрелу в направлении нормали поверхности
         transform.rotation = Quaternion.LookRotation(-contact.normal);
 
-        // Закрепляем стрелу в объекте, сохраняя мировую позицию
-        transform.SetParent(collision.transform, worldPositionStays: true);
-
-        Debug.Log($"Arrow embedded at {transform.position} with rotation {transform.rotation}");
+        transform.SetParent(collision.transform);
     }
 
-
-
-    private void ReflectArrow(Vector3 collisionNormal)
+    public void ReflectArrow(Vector3 collisionNormal)
     {
         Vector3 newDirection = Vector3.Reflect(_rigidbody.velocity.normalized, collisionNormal);
 
-        _rigidbody.velocity = newDirection * _forse * Time.deltaTime;
+        // Привести направление рикошета к ближайшей основной оси
+        if (Mathf.Abs(newDirection.x) > Mathf.Abs(newDirection.y))
+        {
+            // Если движение больше по оси X
+            newDirection = new Vector3(Mathf.Sign(newDirection.x), 0, 0);
+        }
+        else
+        {
+            // Если движение больше по оси Y
+            newDirection = new Vector3(0, Mathf.Sign(newDirection.y), 0);
+        }
 
+        // Нормализовать направление (хотя уже приведено к единичным значениям, но для надежности)
+        newDirection = newDirection.normalized;
+
+        // Применить изменения к Rigidbody
+        _rigidbody.velocity = Vector3.zero;
+        _rigidbody.AddForce(newDirection * _forseBounse, ForceMode.Impulse);
+
+        // Повернуть объект, если направление не нулевое
         if (newDirection != Vector3.zero)
         {
-            transform.rotation = Quaternion.LookRotation(newDirection);
+            transform.rotation = Quaternion.LookRotation(new Vector3(newDirection.x, newDirection.y, 0));
+        }
+
+    }
+
+    public void ShootInWall(Collision collision)
+    {
+        Debug.Log("Отскок");
+
+        Vector3 relativeVelocity = collision.relativeVelocity;
+
+        float angle = Vector3.Angle(relativeVelocity, -collision.contacts[0].normal);
+        Debug.Log("Angle: " + angle);
+
+
+        if (angle < 199 && angle > 166)
+        {
+            EmbedArrow(collision);
+        }
+        else
+        {
+            ReflectArrow(collision.contacts[0].normal);
+        }
+    }
+
+    void DestroyArrow()
+    {
+        // Проверяем, была ли стрела отменена
+        if (!hasHitEnemy)
+        {
+            Destroy(gameObject);
         }
     }
 }
