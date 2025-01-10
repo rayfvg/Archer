@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class Bootstrap : MonoBehaviour
@@ -12,7 +13,7 @@ public class Bootstrap : MonoBehaviour
 
     private void Awake()
     {
-        InitializeLvl();
+       // InitializeLvl();
     }
 
     public void CreateLvl(int id)
@@ -37,16 +38,36 @@ public class Bootstrap : MonoBehaviour
         InitializeLvl();
     }
 
+    public void SelectLevel(int lvlNumber)
+    {
+        _mainMenu.SetActive(false);
+        CreateLvl(lvlNumber);
+        InitializeLvl();
+    }
+
     public void StartNextLvl()
     {
-        string currentLvl = _currentLvl.name;
-        char format = currentLvl[0];
-        int id = int.Parse(format.ToString());
+        if (_currentLvl == null)
+        {
+            Debug.LogError("Current level is null!");
+            return;
+        }
 
-        if (_currentLvl != null)
-            Destroy(_currentLvl);
+        // Извлекаем число из имени уровня
+        string currentLvlName = _currentLvl.name;
+        if (!int.TryParse(new string(currentLvlName.Where(char.IsDigit).ToArray()), out int id))
+        {
+            Debug.LogError($"Unable to parse level number from '{currentLvlName}'");
+            return;
+        }
 
+        // Уничтожаем текущий уровень
+        Destroy(_currentLvl);
+
+        // Отключаем победный лейбл
         _winnerLable.SetActive(false);
+
+        // Создаем следующий уровень
         CreateLvl(id + 1);
         InitializeLvl();
     }

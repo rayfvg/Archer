@@ -18,7 +18,7 @@ public class MovableObs : MonoBehaviour
 		if (horizontal)
 			transform.position += Vector3.up * offset;
 		else
-			transform.position += Vector3.forward * offset;
+			transform.position += Vector3.right * offset;
 	}
 
     // Update is called once per frame
@@ -49,18 +49,18 @@ public class MovableObs : MonoBehaviour
 		{
 			if (isForward)
 			{
-				if (transform.position.z < startPos.z + distance)
+				if (transform.position.x < startPos.x + distance)
 				{
-					transform.position += Vector3.forward * Time.deltaTime * speed;
+					transform.position += Vector3.right * Time.deltaTime * speed;
 				}
 				else
 					isForward = false;
 			}
 			else
 			{
-				if (transform.position.z > startPos.z)
+				if (transform.position.x > startPos.x)
 				{
-					transform.position -= Vector3.forward * Time.deltaTime * speed;
+					transform.position -= Vector3.right * Time.deltaTime * speed;
 				}
 				else
 					isForward = true;
