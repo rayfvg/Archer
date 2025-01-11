@@ -13,10 +13,15 @@ public class FinishRules : MonoBehaviour
 
     private GameObject _winnerLable;
 
-    public void Initialize(PlayerView playerView, GameObject winnerLable)
+    private ParticleSystem _winnerParticle;
+
+    public int Lvlid;
+
+    public void Initialize(PlayerView playerView, GameObject winnerLable, ParticleSystem winnerParticle)
     {
         _playerView = playerView;
         _winnerLable = winnerLable;
+        _winnerParticle = winnerParticle;
     }
 
     private void Update()
@@ -41,9 +46,13 @@ public class FinishRules : MonoBehaviour
     public void Winners()
     {
         Debug.Log("Winner");
+        PlayerPrefs.SetInt("lvl" + Lvlid, 1);
         WinnerWhisLvl = false;
         _work = false;
         _playerView.WinnerAnim();
+
+        Instantiate(_winnerParticle, transform.position, Quaternion.identity, transform);
+
         _winnerLable.SetActive(true);
     }
 }
