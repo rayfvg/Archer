@@ -9,12 +9,19 @@ public class CreatorArrow : MonoBehaviour
     public Arrow Arrow;
 
     private bool _readyToShoot = false;
+    private AudioSource _shotSound;
+
+    private AudioSource _ricoshet;
+    private AudioSource _shotInWall;
+    private AudioSource _damage;
+
     public void CreateArrow()
     {
         if (Arrow != null || _readyToShoot)
             return;
 
         Arrow = Instantiate(_arrowPrefab, _positionForArrow.position, _positionForArrow.rotation, _positionForArrow);
+        Arrow.InitArrow(_ricoshet, _shotInWall, _damage);
     }
 
     public void ShotArrow()
@@ -22,6 +29,7 @@ public class CreatorArrow : MonoBehaviour
         if (_readyToShoot && Arrow != null)
         {
             Arrow.Shoot();
+            _shotSound.Play();
             Arrow = null;
             _readyToShoot = false;
         }
@@ -38,4 +46,12 @@ public class CreatorArrow : MonoBehaviour
     }
 
     public void ReadyToShoot() => _readyToShoot = true;
+
+    public void InitSound(AudioSource shotSound, AudioSource ricoshet, AudioSource shotInWall, AudioSource damage)
+    {
+        _shotSound = shotSound;
+        _shotInWall = shotInWall;
+        _ricoshet = ricoshet;
+        _damage = damage;
+    }
 }

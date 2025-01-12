@@ -7,6 +7,8 @@ public class ExplosionBarrel : MonoBehaviour
 
     [SerializeField] private GameObject _expslosionParticle;
 
+    [SerializeField] private GameObject _iceDoor;
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.GetComponent<Arrow>())

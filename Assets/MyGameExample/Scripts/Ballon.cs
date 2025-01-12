@@ -9,19 +9,27 @@ public class Ballon : MonoBehaviour
     {
         if (collision.collider.GetComponent<Arrow>())
         {
-            // Отвязываем партиклы от иерархии
-            _particlePrefab.transform.parent = null;
-
-            // Активируем партиклы
-            _particlePrefab.SetActive(true);
-            _door.SetActive(false);
-
-            // Уничтожаем шарик
-            Destroy(gameObject);
-
-            // Уничтожаем партиклы через заданное время (например, 5 секунд)
-            Destroy(_particlePrefab, 5f);
+            Booom();
         }
 
     }
+
+    private void Booom()
+    {
+        // Отвязываем партиклы от иерархии
+        _particlePrefab.transform.parent = null;
+
+        // Активируем партиклы
+        _particlePrefab.SetActive(true);
+        if (_door != null)
+            _door.SetActive(false);
+
+        // Уничтожаем шарик
+        Destroy(gameObject);
+
+        // Уничтожаем партиклы через заданное время (например, 5 секунд)
+        Destroy(_particlePrefab, 5f);
+    }
+
+
 }

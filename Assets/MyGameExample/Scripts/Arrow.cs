@@ -12,8 +12,12 @@ public class Arrow : MonoBehaviour
     [SerializeField] private float arrowEmbed = 0.01f;
 
     [SerializeField] private float _lifeTime;
-
     private bool hasHitEnemy = false;
+
+    private AudioSource _rikoshet;
+    private AudioSource _shotInWall;
+
+    private AudioSource _damage;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -22,9 +26,10 @@ public class Arrow : MonoBehaviour
             ShootInWall(collision);
         }
 
-        if(collision.collider.TryGetComponent(out Enemy enemy))
+        if (collision.collider.TryGetComponent(out Enemy enemy))
         {
             enemy.TakeDamage();
+            _damage.Play();
 
             hasHitEnemy = true; // Помечаем, что стрела попала во врага
             CancelInvoke("DestroyArrow");
@@ -48,7 +53,8 @@ public class Arrow : MonoBehaviour
     public void EmbedArrow(Collision collision)
     {
         Debug.Log("проткнул");
-
+        if (collision.collider.GetComponent<Enemy>() == null)
+            _shotInWall.Play();
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.isKinematic = true;
 
@@ -64,7 +70,7 @@ public class Arrow : MonoBehaviour
     public void ReflectArrow(Vector3 collisionNormal)
     {
         Vector3 newDirection = Vector3.Reflect(_rigidbody.velocity.normalized, collisionNormal);
-
+        _rikoshet.Play();
         // Привести направление рикошета к ближайшей основной оси
         if (Mathf.Abs(newDirection.x) > Mathf.Abs(newDirection.y))
         {
@@ -119,5 +125,12 @@ public class Arrow : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void InitArrow(AudioSource ricoshet, AudioSource shotInWall, AudioSource damage)
+    {
+        _shotInWall = shotInWall;
+        _rikoshet = ricoshet;
+        _damage = damage;
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ public class FinishRules : MonoBehaviour
 
     private ParticleSystem _winnerParticle;
 
+
     public int Lvlid;
 
     public void Initialize(PlayerView playerView, GameObject winnerLable, ParticleSystem winnerParticle)
@@ -26,14 +28,15 @@ public class FinishRules : MonoBehaviour
 
     private void Update()
     {
-       if(_work == false)
+        if (_work == false)
             return;
 
         if (WinnerWhisLvl)
         {
-            Winners();
+            StartCoroutine(DelayedWinners());
+            return;
         }
-            
+
         foreach (Enemy enemy in enemies)
         {
             if (enemy.IsLive == true)
@@ -43,12 +46,18 @@ public class FinishRules : MonoBehaviour
         WinnerWhisLvl = true;
     }
 
+    private IEnumerator DelayedWinners()
+    {
+        _work = false; // Останавливаем работу, чтобы не вызывалась победа несколько раз
+        yield return new WaitForSeconds(0.5f); // Задержка
+        Winners();
+    }
+
     public void Winners()
     {
         Debug.Log("Winner");
         PlayerPrefs.SetInt("lvl" + Lvlid, 1);
         WinnerWhisLvl = false;
-        _work = false;
         _playerView.WinnerAnim();
 
         Instantiate(_winnerParticle, transform.position, Quaternion.identity, transform);

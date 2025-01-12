@@ -17,9 +17,15 @@ public class Bootstrap : MonoBehaviour
 
     private GameObject _currentLvl;
 
+    public AudioSource _shotArrow;
+    public AudioSource _loadingArrow;
+    public AudioSource _ricoshet;
+    public AudioSource _shotInWall;
+    public AudioSource _damage;
+
     private void Awake()
     {
-        InitializeLvl();
+      //  InitializeLvl();
     }
 
  
@@ -36,9 +42,12 @@ public class Bootstrap : MonoBehaviour
         FinishRules finishRules = FindObjectOfType<FinishRules>();
         BowAiming bowAiming = FindObjectOfType<BowAiming>();
         PlayerView _playerView = FindObjectOfType<PlayerView>();
+        CreatorArrow creatorArrow = FindObjectOfType<CreatorArrow>();
 
         bowAiming.InitCamera(_camera);
         finishRules.Initialize(_playerView, _winnerLable, _winnerParticle);
+        creatorArrow.InitSound(_shotArrow, _ricoshet, _shotInWall, _damage);
+        _playerView.InitSound(_loadingArrow);
     }
 
     public void SelectLevel(int level)

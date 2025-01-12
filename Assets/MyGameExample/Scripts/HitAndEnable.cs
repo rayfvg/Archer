@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HitAndEnable : MonoBehaviour
 {
-    public GameObject EnabledObj;
+    public GameObject[] EnabledObjs;
 
     public bool Enable = true;
 
@@ -12,10 +12,22 @@ public class HitAndEnable : MonoBehaviour
         if (collision.collider.GetComponent<Arrow>() != null)
         {
             if (Enable)
-                EnabledObj.SetActive(true);
+            {
+                foreach (var obj in EnabledObjs)
+                {
+                    obj.SetActive(true);
+                }
+            }
+                
 
             if(Enable == false)
-                EnabledObj.SetActive(false);
+            {
+                foreach (var obj in EnabledObjs)
+                {
+                    obj.SetActive(false);
+                }
+            }
+                
         }
            
     }
