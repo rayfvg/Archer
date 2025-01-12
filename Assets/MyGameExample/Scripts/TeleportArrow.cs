@@ -6,11 +6,14 @@ public class TeleportArrow : MonoBehaviour
 
     public bool Horizontal = false;
 
+    public AudioSource _tpSound;
+
     [System.Obsolete]
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<Arrow>())
         {
+            _tpSound.Play();
             other.transform.position = positionOutput.position;
 
             if (Horizontal)

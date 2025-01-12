@@ -15,15 +15,16 @@ public class FinishRules : MonoBehaviour
     private GameObject _winnerLable;
 
     private ParticleSystem _winnerParticle;
-
+    private AudioSource _victorySound;
 
     public int Lvlid;
 
-    public void Initialize(PlayerView playerView, GameObject winnerLable, ParticleSystem winnerParticle)
+    public void Initialize(PlayerView playerView, GameObject winnerLable, ParticleSystem winnerParticle, AudioSource victorySound)
     {
         _playerView = playerView;
         _winnerLable = winnerLable;
         _winnerParticle = winnerParticle;
+        _victorySound = victorySound;
     }
 
     private void Update()
@@ -51,10 +52,12 @@ public class FinishRules : MonoBehaviour
         _work = false; // Останавливаем работу, чтобы не вызывалась победа несколько раз
         yield return new WaitForSeconds(0.5f); // Задержка
         Winners();
+
     }
 
     public void Winners()
     {
+
         Debug.Log("Winner");
         PlayerPrefs.SetInt("lvl" + Lvlid, 1);
         WinnerWhisLvl = false;
@@ -62,6 +65,7 @@ public class FinishRules : MonoBehaviour
 
         Instantiate(_winnerParticle, transform.position, Quaternion.identity, transform);
 
+        _victorySound.Play();
         _winnerLable.SetActive(true);
     }
 }

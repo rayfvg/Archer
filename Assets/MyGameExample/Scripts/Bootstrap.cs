@@ -22,6 +22,7 @@ public class Bootstrap : MonoBehaviour
     public AudioSource _ricoshet;
     public AudioSource _shotInWall;
     public AudioSource _damage;
+    public AudioSource _victory;
 
     private void Awake()
     {
@@ -38,6 +39,8 @@ public class Bootstrap : MonoBehaviour
     public void InitializeLvl()
     {
         Time.timeScale = 1;
+        AudioListener.pause = false;
+        StopAllMusic();
 
         FinishRules finishRules = FindObjectOfType<FinishRules>();
         BowAiming bowAiming = FindObjectOfType<BowAiming>();
@@ -45,7 +48,7 @@ public class Bootstrap : MonoBehaviour
         CreatorArrow creatorArrow = FindObjectOfType<CreatorArrow>();
 
         bowAiming.InitCamera(_camera);
-        finishRules.Initialize(_playerView, _winnerLable, _winnerParticle);
+        finishRules.Initialize(_playerView, _winnerLable, _winnerParticle, _victory);
         creatorArrow.InitSound(_shotArrow, _ricoshet, _shotInWall, _damage);
         _playerView.InitSound(_loadingArrow);
     }
@@ -123,17 +126,33 @@ public class Bootstrap : MonoBehaviour
         Destroy(_currentLvl);
 
         _mainMenu.SetActive(true);
+        StopAllMusic();
     }
 
     public void ClosedMenuInGame()
     {
         _menuInGame.SetActive(false);
         Time.timeScale = 1;
+        AudioListener.pause = false;
     }
 
     public void OpenMenuInGame()
     {
         _menuInGame.SetActive(true);
         Time.timeScale = 0;
+        AudioListener.pause = true;
+    }
+
+    public static void StopAllMusic()
+    {
+        // Находим все AudioSource в текущей сцене
+        AudioSource[] audioSources = FindObjectsOfType<AudioSource>();
+        foreach (AudioSource source in audioSources)
+        {
+            if (source.isPlaying)
+            {
+                source.Stop(); // Останавливаем воспроизведение
+            }
+        }
     }
 }

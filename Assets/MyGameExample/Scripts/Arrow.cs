@@ -30,6 +30,7 @@ public class Arrow : MonoBehaviour
         {
             enemy.TakeDamage();
             _damage.Play();
+            FindObjectOfType<MemesSound>().GetRandomMem();
 
             hasHitEnemy = true; // ѕомечаем, что стрела попала во врага
             CancelInvoke("DestroyArrow");
@@ -53,8 +54,12 @@ public class Arrow : MonoBehaviour
     public void EmbedArrow(Collision collision)
     {
         Debug.Log("проткнул");
-        if (collision.collider.GetComponent<Enemy>() == null)
+        if (collision.collider.GetComponent<Enemy>() == null ||
+                (collision.collider.GetComponent<HitAndEnable>() == null) ||
+                (collision.collider.GetComponent<ButtonEnabletObj>() == null))
             _shotInWall.Play();
+
+
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.isKinematic = true;
 

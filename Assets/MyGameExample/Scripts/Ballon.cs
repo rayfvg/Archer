@@ -5,10 +5,12 @@ public class Ballon : MonoBehaviour
     [SerializeField] private GameObject _particlePrefab;
     [SerializeField] private GameObject _door;
 
+    [SerializeField] private AudioSource _expsBallons;
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.GetComponent<Arrow>())
         {
+            _expsBallons.Play();
             Booom();
         }
 

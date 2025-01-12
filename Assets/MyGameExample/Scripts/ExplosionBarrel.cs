@@ -7,8 +7,7 @@ public class ExplosionBarrel : MonoBehaviour
 
     [SerializeField] private GameObject _expslosionParticle;
 
-    [SerializeField] private GameObject _iceDoor;
-
+    [SerializeField] private AudioSource _exsplosionSound;
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.GetComponent<Arrow>())
@@ -38,6 +37,7 @@ public class ExplosionBarrel : MonoBehaviour
             }
         }
 
+        _exsplosionSound.Play();
         // ”ничтожаем бочку
         Destroy(gameObject);
     }

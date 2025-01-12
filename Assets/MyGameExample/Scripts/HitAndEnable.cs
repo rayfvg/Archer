@@ -6,11 +6,15 @@ public class HitAndEnable : MonoBehaviour
 
     public bool Enable = true;
 
+    public AudioSource ClickAudio;
+
     private void OnCollisionEnter(Collision collision)
     {
         
         if (collision.collider.GetComponent<Arrow>() != null)
         {
+            ClickAudio.Play();
+
             if (Enable)
             {
                 foreach (var obj in EnabledObjs)
