@@ -10130,7 +10130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionOutput: {fileID: 679900693312137256}
   Horizontal: 0
-  _tpSound: {fileID: 0}
+  _tpSound: {fileID: 3967116987619487167}
 --- !u!65 &3401663445647444633
 BoxCollider:
   m_ObjectHideFlags: 0

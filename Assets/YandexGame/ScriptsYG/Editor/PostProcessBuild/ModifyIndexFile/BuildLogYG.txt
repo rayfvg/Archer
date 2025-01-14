@@ -1,0 +1,2 @@
+Build path: G:/gamedef/Archer/Builder/1
+Build number: 1

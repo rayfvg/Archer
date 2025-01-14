@@ -6,10 +6,11 @@ public class BowAiming : MonoBehaviour
     [SerializeField] private Transform _targetPoint;
     [SerializeField] private float minAngle = -45f; // ћинимальный угол поворота (в градусах)
     [SerializeField] private float maxAngle = 45f;  // ћаксимальный угол поворота (в градусах)
+    [SerializeField] private float minMouseDistance = 1f; // ћинимальное рассто€ние между мышью и персонажем дл€ поворота
 
     private Camera _mainCamera; //  амера, котора€ будет использоватьс€ дл€ получени€ положени€ мыши
 
-   public void InitCamera(Camera camera) => _mainCamera = camera;
+    public void InitCamera(Camera camera) => _mainCamera = camera;
 
     void Update()
     {
@@ -22,6 +23,12 @@ public class BowAiming : MonoBehaviour
         Vector3 direction = worldMousePosition - _targetPoint.position;
         direction.z = 0; // ћы работаем в 2D, поэтому убираем изменение по оси Z
 
+        // ѕровер€ем рассто€ние между мышью и точкой на луке
+        if (direction.magnitude < minMouseDistance)
+        {
+            return; // ≈сли мышь слишком близко, выходим из метода, чтобы избежать дрожани€
+        }
+
         // ¬ычисл€ем угол, на который нужно повернуть лук
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
@@ -32,5 +39,4 @@ public class BowAiming : MonoBehaviour
         _player.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 }
-
 

@@ -1,6 +1,5 @@
-using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
+using YG;
 
 public class Bootstrap : MonoBehaviour
 {
@@ -16,6 +15,8 @@ public class Bootstrap : MonoBehaviour
     [SerializeField] private ParticleSystem _winnerParticle;
 
     private GameObject _currentLvl;
+    private bool _isFirstRunCompleted = false; // Флаг завершения первого цикла
+    private int _currentLevelIndex = 0; // Текущий индекс уровня
 
     public AudioSource _shotArrow;
     public AudioSource _loadingArrow;
@@ -26,10 +27,8 @@ public class Bootstrap : MonoBehaviour
 
     private void Awake()
     {
-      // InitializeLvl();
+        // InitializeLvl();
     }
-
- 
 
     public void CreateLvl(int id)
     {
@@ -57,6 +56,7 @@ public class Bootstrap : MonoBehaviour
     {
         _mainMenu.SetActive(false);
         _optionInGame.SetActive(true);
+        _currentLevelIndex = level - 1; // Устанавливаем текущий уровень
         CreateLvl(level);
         InitializeLvl();
     }
@@ -69,13 +69,7 @@ public class Bootstrap : MonoBehaviour
             return;
         }
 
-        // Извлекаем число из имени уровня
-        string currentLvlName = _currentLvl.name;
-        if (!int.TryParse(new string(currentLvlName.Where(char.IsDigit).ToArray()), out int id))
-        {
-            Debug.LogError($"Unable to parse level number from '{currentLvlName}'");
-            return;
-        }
+        ShowMeAds();
 
         // Уничтожаем текущий уровень
         Destroy(_currentLvl);
@@ -83,8 +77,27 @@ public class Bootstrap : MonoBehaviour
         // Отключаем победный лейбл
         _winnerLable.SetActive(false);
 
-        // Создаем следующий уровень
-        CreateLvl(id + 1);
+        // Проверяем, завершён ли первый цикл прохождения
+        if (!_isFirstRunCompleted)
+        {
+            // Переход к следующему уровню
+            _currentLevelIndex++;
+            if (_currentLevelIndex >= _lvlPrefabs.Length)
+            {
+                _isFirstRunCompleted = true; // Первый цикл завершён
+                Debug.Log("First run completed. Switching to random levels.");
+            }
+        }
+
+        // Определяем следующий уровень
+        int nextLevelId = _isFirstRunCompleted
+            ? Random.Range(1, _lvlPrefabs.Length + 1) // Случайный уровень
+            : _currentLevelIndex + 1;                // Последовательный уровень
+
+        Debug.Log($"Loading level: {nextLevelId}");
+
+        // Создаём следующий уровень
+        CreateLvl(nextLevelId);
         InitializeLvl();
     }
 
@@ -96,22 +109,14 @@ public class Bootstrap : MonoBehaviour
             return;
         }
 
-        // Извлекаем число из имени уровня
-        string currentLvlName = _currentLvl.name;
-        if (!int.TryParse(new string(currentLvlName.Where(char.IsDigit).ToArray()), out int id))
-        {
-            Debug.LogError($"Unable to parse level number from '{currentLvlName}'");
-            return;
-        }
-
         // Уничтожаем текущий уровень
         Destroy(_currentLvl);
 
         // Отключаем победный лейбл
         _winnerLable.SetActive(false);
 
-        // Создаем следующий уровень
-        CreateLvl(id);
+        // Перезапускаем текущий уровень
+        CreateLvl(_currentLevelIndex + 1);
         InitializeLvl();
 
         _menuInGame.SetActive(false);
@@ -155,4 +160,10 @@ public class Bootstrap : MonoBehaviour
             }
         }
     }
+
+    public void ShowMeAds()
+    {
+        YandexGame.FullscreenShow();
+    }
 }
+

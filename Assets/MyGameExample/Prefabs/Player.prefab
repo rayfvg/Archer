@@ -509,7 +509,8 @@ MonoBehaviour:
   _player: {fileID: 4164263519459455453}
   _targetPoint: {fileID: 9101657940457476896}
   minAngle: -50
-  maxAngle: 36
+  maxAngle: 50
+  minMouseDistance: 5
 --- !u!1 &1271111197353223426
 GameObject:
   m_ObjectHideFlags: 0
